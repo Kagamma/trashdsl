@@ -585,7 +585,7 @@ enum TokenType {
     BracketOpen, BracketClose, SquareOpen, SquareClose, Negative, Number, String, Assign,
     Comma,
     Begin, End,
-    When, Then, Else, While, Do, For, To, DownTo, Return,
+    If, Then, Else, While, Do, For, To, DownTo, Return,
     Break, Continue,
     FunctionDecl, Lambda,
     Function, Constant, Variable, Record,
@@ -599,7 +599,7 @@ let TokenName = [
     '(', ')', '[', ']', 'negative', 'number', 'string', 'assign',
     ',',
     '{', '}', 
-    'when', 'then', 'else', 'while', 'do', 'for', 'to', 'downto', 'return',
+    'if', 'then', 'else', 'while', 'do', 'for', 'to', 'downto', 'return',
     'break', 'continue',
     'function', '=>',
     'function', 'constant', 'variable', 'record',
@@ -847,8 +847,8 @@ class Compiler {
                     case 'do':
                         result.kind = TokenType.Do;
                         break;
-                    case 'when':
-                        result.kind = TokenType.When;
+                    case 'if':
+                        result.kind = TokenType.If;
                         break;
                     case 'then':
                         result.kind = TokenType.Then;
@@ -1214,7 +1214,7 @@ class Compiler {
         this.isDoingExpr--;
     }
 
-    private handleWhen() {
+    private handleIf() {
 		// Block addresses
         let startBlock1: number;
         let startBlock2: number;
@@ -1549,9 +1549,9 @@ class Compiler {
                 this.nextToken();
                 this.handleFor();
                 break;
-            case TokenType.When:
+            case TokenType.If:
                 this.nextToken();
-                this.handleWhen();
+                this.handleIf();
                 break;
             case TokenType.Begin:
                 this.nextToken();
@@ -1759,7 +1759,7 @@ vmInst.registerFunction('prompt', 1, (args) => {
 vmInst.registerFunction('length', 1, (args) => {
     return args[0].length;
 });
-vmInst.registerFunction('if', 3, (args) => {
+vmInst.registerFunction('iff', 3, (args) => {
     return args[0] == true ? args[1] : args[2];
 });
 vmInst.registerFunction('sin', 1, (args) => {
