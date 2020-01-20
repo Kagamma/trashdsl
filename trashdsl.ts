@@ -96,7 +96,7 @@ class CodeBlock {
         this.name = '';
         this.code = [];
         this.codePtr = 0;
-        this.arguments = []];
+        this.arguments = [];
     }
 
     getCurrentAddr(): number {
@@ -194,7 +194,7 @@ class VirtualMachine {
 	
     constructor(vmInst: VirtualMachineInstance) {
         this.reset();
-        this.nativeFuncMap = new Map<string, FuncInfo>;
+        this.nativeFuncMap = new Map<string, FuncInfo>();
         this.vmInst = vmInst;
 	}
 
@@ -963,7 +963,7 @@ class Compiler {
         this.Error('Expected ' + this.tokenTypeString(expected) + ', got "' + TokenName[token.kind] + '" instead.');
     }
 
-    private createNewIdent(kind: IdentType; addr: number): IdentInfo {
+    private createNewIdent(kind: IdentType, addr: number): IdentInfo {
         let ident: IdentInfo = new IdentInfo();
         ident.addr = addr;
         ident.kind = kind;
@@ -1036,8 +1036,7 @@ class Compiler {
         let factor = () => {
             while (true) {
                 let token: Token = this.peekAtNextTokenExpected([TokenType.BracketOpen, TokenType.BracketClose, TokenType.Number, TokenType.EOL,
-                    TokenType.Negative, TokenType.Function, TokenType.Constant, TokenType.Variable, TokenType.String
-                );
+                    TokenType.Negative, TokenType.Function, TokenType.Constant, TokenType.Variable, TokenType.String]);
                 let c: any = 0;
                 let ident: IdentInfo;
                 switch (token.kind) {
@@ -1489,7 +1488,7 @@ class Compiler {
         return result;
     }
 
-    private handleVarAssign(isUnknown: boolean; token: Token) {
+    private handleVarAssign(isUnknown: boolean, token: Token) {
         let varName: string = token.value;
         let varAddr: number = this.localVarMap.get(varName).addr;
 
@@ -1791,7 +1790,7 @@ vmInst.registerFunction('sum', -1, (args) => {
     return 0;
 });
 
-let main = () => {
+main = () => {
     let result: string = '';
     try {
         console.clear();
@@ -1820,7 +1819,7 @@ let main = () => {
     outNode.innerHTML = result;
 };
 
-let exec = () => {
+exec = () => {
     let result: string = '';
     if (!runable) return;
     try {
